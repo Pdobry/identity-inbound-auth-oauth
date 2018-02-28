@@ -52,22 +52,37 @@ You can decode access_token at https://jwt.io:
 
 > HEADER:ALGORITHM & TOKEN TYPE
 > {
+> 
 >  "kid": "c2dce1ba7fa57e0f0def2d32d552eadc33159d39",
+> 
 >  "alg": "RS256"
+> 
 > }
 > 
 > PAYLOAD:DATA
+> 
 > {
+> 
 >  "uid": "PDOBRY.LAB/teacher2",
+> 
 >  "sub": "test-auth-3fb8a@appspot.gserviceaccount.com",
+> 
 >  "aud": "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
+> 
 >  "name": "Dummy Teacher",
+> 
 >  "iss": "test-auth-3fb8a@appspot.gserviceaccount.com",
+> 
 >  "preferred_username": "Dummy Teacher",
+> 
 >  "exp": 1519834087,
+> 
 >  "iat": 1519830487,
+> 
 >  "email": "dummy.teacher@somegreatschool.com",
+> 
 >  "jti": "885c40b8-8492-4c1b-a107-a3e552a05b29"
+> 
 > }
 
 # Authentication
@@ -79,5 +94,5 @@ Signed JWT token is then used for authentication against Firebase as [Custom Tok
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTM0MzA2NDM3XX0=
+eyJoaXN0b3J5IjpbLTE1Mzk2NTE3NV19
 -->
