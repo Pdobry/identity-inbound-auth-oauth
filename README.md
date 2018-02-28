@@ -75,3 +75,6 @@ Signed JWT token is then used for authentication against Firebase as [Custom Tok
 ![Auth diagram](./img/auth.png)
 
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMzA5MTY3MzA3XX0=
+-->
