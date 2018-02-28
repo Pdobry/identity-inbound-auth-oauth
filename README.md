@@ -14,12 +14,12 @@ This is a fork from official WSO2 IS OAuth extension with added `JWTTokenIssuerC
 
 Edit **wso2is-5.4.1/repository/conf/identity/identity.xml** configuration file and add to `<OAuth>` section:
 
-<IdentityOAuthTokenGenerator>org.wso2.carbon.identity.oauth2.token.JWTTokenIssuerCustom</IdentityOAuthTokenGenerator>
+`<IdentityOAuthTokenGenerator>org.wso2.carbon.identity.oauth2.token.JWTTokenIssuerCustom</IdentityOAuthTokenGenerator>`
 
 Then update the H2 database schema for WSO2 IS in file `dbscripts/identity/h2.sql` and change     values in IDN_OAUTH2_ACCESS_TOKEN table to:
 
-ACCESS_TOKEN VARCHAR (1024),
-REFRESH_TOKEN VARCHAR (1024),
+`ACCESS_TOKEN VARCHAR (1024),`
+`REFRESH_TOKEN VARCHAR (1024),`
 
 If you've already started WSO2 IS application, you have to stop it, remove all databases from **wso2is-5.4.1/repository/databases** directory and start it with parameter `-D setup` to create new databases.
 
@@ -33,19 +33,20 @@ WSO2 Admin configuration:
 6. In Service Providers create a new provider for your application and in Inbound Authentication Configuration - OAuth/OpenID Connect Configuration register new OAuth client. You'll get OAuth Client Key and password.
 
 ## How to test it
-I use Restlet Client extension in Chrome browser. Send HTTP POST request for URL https://localhost:9443/oauth2/token with Content-Type: application/x-www-form-urlencoded and Authorization Basic containing OAuth Client Key and password. Content is (replace username and password):
+I use Restlet Client extension in Chrome browser. Send HTTP POST request for URL `https://localhost:9443/oauth2/token` with Content-Type: application/x-www-form-urlencoded and Authorization Basic containing OAuth Client Key and password. Content is (replace username and password):
 
-grant_type=password&username=<username>&password=<password>&scope=spork
+`grant_type=password&username=<username>&password=<password>&scope=spork`
 
 You'll get a response like this:
 
-{
+`{
 "access_token":  "eyJraWQiOiJjMmRjZTFiYTdmYTU3ZTBmMGRlZjJkMzJkNTUyZWFkYzMzMTU5ZDM5IiwiYWxnIjoiUlMyNTYifQ.eyJ1aWQiOiJQRE9CUlkuTEFCXC90ZWFjaGVyMiIsInN1YiI6InRlc3QtYXV0aC0zZmI4YUBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczpcL1wvaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tXC9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlzcyI6InRlc3QtYXV0aC0zZmI4YUBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJleHAiOjE1MTkzMTI1OTUsImlhdCI6MTUxOTMwODk5NSwianRpIjoiOTBlOGE4YTQtNDBlMS00MzcyLWI3ZDItY2ZhYTU5Yzg0NGNjIn0.Aylog89SEiME9NIDS97pMv3wI27j0xe3NJ3N506moSBW-OfGQFCJXlz8gVUec\_71mgq3lT8JMKU7d75ohVBz7ljRy2opKFxpGSdJv71d-s1MD66BAfP6mIHaB-\_erqtNbyZSYz62mMYmD108lRNGpFxq6UobyQDGTKjW73NOOoaT\_lPWEbz7FYHJvvMY2\_C5sL1y46yPsuvxDbN1gx5jTxPA6PbyxXWKtnPuetuND1MtqZVLWDzcPACRecQpLst0JN5rqTtD8GdUhR0WQEI4TnH2JsnwFZbuNr2uj1O1EPGaA3JuGGC5yNLTViGgRLpbKAa5EAZPb3f3vn7Wglf6fg",
 "refresh_token":  "567539d0-6a31-342c-a873-7ca1be47633a",
 "scope":  "spork",
 "token_type":  "Bearer",
 "expires_in":  3600
 }
+`
 
 You can decode access_token at https://jwt.io:
 
