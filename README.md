@@ -40,7 +40,7 @@ I use Restlet Client extension in Chrome browser. Send HTTP POST request for URL
 You'll get a response like this:
 
 `{
-"access_token":  "eyJraWQiOiJjMmRjZTFiYTdmYTU3ZTBmMGRlZjJkMzJkNTUyZWFkYzMzMTU5ZDM5IiwiYWxnIjoiUlMyNTYifQ.eyJ1aWQiOiJQRE9CUlkuTEFCXC90ZWFjaGVyMiIsInN1YiI6InRlc3QtYXV0aC0zZmI4YUBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczpcL1wvaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tXC9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlzcyI6InRlc3QtYXV0aC0zZmI4YUBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJleHAiOjE1MTkzMTI1OTUsImlhdCI6MTUxOTMwODk5NSwianRpIjoiOTBlOGE4YTQtNDBlMS00MzcyLWI3ZDItY2ZhYTU5Yzg0NGNjIn0.Aylog89SEiME9NIDS97pMv3wI27j0xe3NJ3N506moSBW-OfGQFCJXlz8gVUec\_71mgq3lT8JMKU7d75ohVBz7ljRy2opKFxpGSdJv71d-s1MD66BAfP6mIHaB-\_erqtNbyZSYz62mMYmD108lRNGpFxq6UobyQDGTKjW73NOOoaT\_lPWEbz7FYHJvvMY2\_C5sL1y46yPsuvxDbN1gx5jTxPA6PbyxXWKtnPuetuND1MtqZVLWDzcPACRecQpLst0JN5rqTtD8GdUhR0WQEI4TnH2JsnwFZbuNr2uj1O1EPGaA3JuGGC5yNLTViGgRLpbKAa5EAZPb3f3vn7Wglf6fg",
+"access_token":  "eyJraWQiOiJjMmRjZTFiYTdmYTU3ZTBmMGRlZjJkMzJkNTUyZWFkYzMzMTU5ZDM5IiwiYWxnIjoiUlMyNTYifQ.eyJ1aWQiOiJQRE9CUlkuTEFCXC90ZWFjaGVyMiIsInN1YiI6InRlc3QtYXV0aC0zZmI4YUBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczpcL1wvaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tXC9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsIm5hbWUiOiJEdW1teSBUZWFjaGVyIiwiaXNzIjoidGVzdC1hdXRoLTNmYjhhQGFwcHNwb3QuZ3NlcnZpY2VhY2NvdW50LmNvbSIsInByZWZlcnJlZF91c2VybmFtZSI6IkR1bW15IFRlYWNoZXIiLCJleHAiOjE1MTk4MzQwODcsImlhdCI6MTUxOTgzMDQ4NywiZW1haWwiOiJkdW1teS50ZWFjaGVyQHNvbWVncmVhdHNjaG9vbC5jb20iLCJqdGkiOiI4ODVjNDBiOC04NDkyLTRjMWItYTEwNy1hM2U1NTJhMDViMjkifQ.XyvJOtv6S7Mihck\_btgbSHTbmvJZpiuOP95Wc8KpoDgvUH7gJmm6A3YRB3adlpIoLZE\_VZhcW9VKB55PQwP4C07jt\_Afgql\_bnnpzVpm427MGMRgTgJCQBrLmi16Gb\_2sjOlm9nrNNCBUOYoUoxh2i-rpWFJgHAF96ZYjCRK8naJrKqr4nv-zAotIb0ILgCoT0UF103DbvJ-97MOSxUa6Jeh1ppk2DS3RqH9uWTVXSzlG-KpBtlzpTakkeeoGalVlEgGMlko\_0YjfFdKDLxkDXmbBFZTh4JK1eSWn8KMY8LYdlzXc0VmPhJ5lJxUOTnnA0xoUHmrbdxxxLFFgIGoZg",",
 "refresh_token":  "567539d0-6a31-342c-a873-7ca1be47633a",
 "scope":  "spork",
 "token_type":  "Bearer",
@@ -55,16 +55,27 @@ You can decode access_token at https://jwt.io:
 >  "kid": "c2dce1ba7fa57e0f0def2d32d552eadc33159d39",
 >  "alg": "RS256"
 > }
->
+> 
 > PAYLOAD:DATA
 > {
 >  "uid": "PDOBRY.LAB/teacher2",
 >  "sub": "test-auth-3fb8a@appspot.gserviceaccount.com",
 >  "aud": "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
+> 
+>  "name": "Dummy Teacher",
+> 
 >  "iss": "test-auth-3fb8a@appspot.gserviceaccount.com",
->  "exp": 1519312595,
->  "iat": 1519308995,
->  "jti": "90e8a8a4-40e1-4372-b7d2-cfaa59c844cc"
+> 
+>  "preferred_username": "Dummy Teacher",
+> 
+>  "exp": 1519834087,
+> 
+>  "iat": 1519830487,
+> 
+>  "email": "dummy.teacher@somegreatschool.com",
+> 
+>  "jti": "885c40b8-8492-4c1b-a107-a3e552a05b29"
+> 
 > }
 
 # Authentication
@@ -76,5 +87,5 @@ Signed JWT token is then used for authentication against Firebase as [Custom Tok
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzA5MTY3MzA3XX0=
+eyJoaXN0b3J5IjpbLTIxMTY3Nzk2NjddfQ==
 -->
