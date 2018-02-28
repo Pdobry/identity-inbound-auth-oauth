@@ -71,15 +71,6 @@ You can decode access_token at https://jwt.io:
 Here is a workflow for user authentication using OAuth2 in WSO2 IS to get JWT token with user credentials. Spork web application uses user's login credentials to get signed JWT token from WSO2 IS web service. Spork web application must authenticate to WSO2 IS with own client's credentials. WSO2 IS then issues a JWT token in [Resource Owner Password Credentials Grant](https://docs.wso2.com/display/IS541/Resource+Owner+Password+Credentials+Grant) mode.
 Signed JWT token is then used for authentication against Firebase as [Custom Token Auth](https://firebase.google.com/docs/auth/admin/create-custom-tokens) to get access to Firebase resources.
 
-```mermaid
-sequenceDiagram
-Spork web client ->> WSO2 IS: Sends user login credential
-WSO2 IS-->>MS AD (LDAP): Login credentials (LDAP Auth)
-MS AD (LDAP)-->> WSO2 IS: Auth result
-WSO2 IS->>MS AD (LDAP): Get Claims
-MS AD (LDAP)->> WSO2 IS: Claims
-WSO2 IS->> Spork web client: Signed JWT token with claims
-Spork web client-->> Firebase: Signed JWT token for custom auth
-```
+![Auth diagram](./img/auth.png)
 
 
