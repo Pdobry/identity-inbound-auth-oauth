@@ -29,8 +29,9 @@ WSO2 Admin configuration:
 2. Add new `org.wso2.carbon.user.core.ldap.ActiveDirectoryUserStoreManager` user store in **User Stores**. Configure it to use your ActiveDirectory LDAP server. Set correct User Search Base and Username Attribute (eg. sAMAccountName).
 3. Configure claims you want to use in **Claims** for dialect `http://wso2.org/claims`.
 4. Go to **Registry -> Browse**  to edit the registry. In `/_system/config/oidc` create `spork` property with requested claims (eg. name, email, formatted, preferred_username).
-5. Create Java KeyStore file eg. testfile (1)named spork.jks) with private auth key for Firebase and public key. I use KeyStore Explorer for this. Import the keystore to WSO2 ISUpload the file to WSO2 IS Registry into `/_system/governance/repository/security/key-stores`. This private key will be used by JWTTokenIssuerCustom for signing JWT token.
+5. Create Java KeyStore file (named spork.jks) with private auth key for Firebase and public key. I use KeyStore Explorer for this. Import the keystore to WSO2 IS (or opload the file to WSO2 IS Registry into `/_system/governance/repository/security/key-stores`). This private key will be used by JWTTokenIssuerCustom for signing JWT token.
 6. In Service Providers create a new provider for your application and in Inbound Authentication Configuration - OAuth/OpenID Connect Configuration register new OAuth client. You'll get OAuth Client Key and password.
+7. In WSO2 IS registry created a new object (eg. text) named spork
 
 ## How to test it
 I use Restlet Client extension in Chrome browser. Send HTTP POST request for URL `https://localhost:9443/oauth2/token` with Content-Type: application/x-www-form-urlencoded and Authorization Basic containing OAuth Client Key and password. Content is (replace username and password):
@@ -94,5 +95,5 @@ Signed JWT token is then used for authentication against Firebase as [Custom Tok
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTAwNTQ5ODYsLTE1Mzk2NTE3NV19
+eyJoaXN0b3J5IjpbMTE1OTY5NDkxMCwtMTUzOTY1MTc1XX0=
 -->
