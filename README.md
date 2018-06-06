@@ -93,8 +93,8 @@ Signed JWT token is then used for authentication against Firebase as [Custom Tok
 
 ![Auth diagram](./img/auth.png)
 
-# Heading
+# WSO2 IS 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQwOTgxNTQ3NiwtMTUzOTY1MTc1XX0=
+eyJoaXN0b3J5IjpbLTEwODM3NjQ0NzUsLTE1Mzk2NTE3NV19
 -->
