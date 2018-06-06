@@ -93,8 +93,9 @@ Signed JWT token is then used for authentication against Firebase as [Custom Tok
 
 ![Auth diagram](./img/auth.png)
 
-# WSO2 IS 
+# WSO2 IS & MS AD
+To map users from Microsoft Active Directory, add new User Store with type of *org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager*
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwODM3NjQ0NzUsLTE1Mzk2NTE3NV19
+eyJoaXN0b3J5IjpbMjAzNzk0MzQ1MSwtMTUzOTY1MTc1XX0=
 -->
