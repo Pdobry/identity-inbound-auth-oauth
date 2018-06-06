@@ -94,8 +94,8 @@ Signed JWT token is then used for authentication against Firebase as [Custom Tok
 ![Auth diagram](./img/auth.png)
 
 # WSO2 IS & MS AD
-To map users from Microsoft Active Directory, add new User Store with type of *org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager*. If you're using Secure LDAP (LDAPS on port 636) with custom or self-signed certificate, make sure that the LDAP server SSL certificate is imported to WSO2.
+To map users from Microsoft Active Directory, add new User Store with type of *org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager*. If you're using Secure LDAP (LDAPS on port 636) with custom or self-signed certificate, make sure that the LDAP server SSL certificate is imported to WSO2. To import the certificate, open wso2is/repository/resources/security/client-truststore.jks
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTg1ODgxMDk5LC0xNTM5NjUxNzVdfQ==
+eyJoaXN0b3J5IjpbMjEyMTYzNTAwLC0xNTM5NjUxNzVdfQ==
 -->
