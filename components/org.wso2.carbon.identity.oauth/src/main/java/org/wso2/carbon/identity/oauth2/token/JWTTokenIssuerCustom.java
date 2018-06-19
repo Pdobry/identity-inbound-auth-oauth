@@ -78,10 +78,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class JWTTokenIssuerCustom extends JWTTokenIssuer {
 
 
-	private static final String SPORK_KEYSTORE_NAME = "spork.jks";
-	private static final String SPORK_PRIVATEKEY_ALIAS = "spork";
+	private static final String SPORK_KEYSTORE_NAME = ".jks";
+	private static final String SPORK_PRIVATE_KEY_NAME = "spork";
 	private static final String SPORK_AUDIENCE = "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit";
-	private static final String SPORK_REGISTRY_PATH = "/spork";
 	private static final String SPORK_KEY_ID = "spork_key_id";
 	private static final String SPORK_CLIENT_ID = "spork_client_id";
 	
@@ -116,14 +115,29 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
         }
 
         try {
-            if (oAuthTokenReqMessageContext.getScope().length > 0 && Arrays.asList(oAuthTokenReqMessageContext.getScope()).contains("spork")) {
+            log.info(Arrays.asList(oAuthTokenReqMessageContext.getScope()).toString());
+            String sporkScopeName = "";
+            
+            if (oAuthTokenReqMessageContext.getScope().length > 0) {
+	            List<String> scopes = Arrays.asList(oAuthTokenReqMessageContext.getScope());
+	            for(String listItem : scopes){
+	            	   if(listItem.contains("spork")){
+	            		   sporkScopeName = listItem;
+	            		   break;
+	            	   }
+	            	}                
+            }
+            
+            
+            if (sporkScopeName != "" ) {         
                 if (log.isDebugEnabled()) {
-                		log.debug("Custom: has scope \"spork\"");
+                		log.debug("Custom: has scope \"" + sporkScopeName +" \"");
                 }
-                return this.customBuildJWTToken(oAuthTokenReqMessageContext);
+                return this.customBuildJWTToken(oAuthTokenReqMessageContext, sporkScopeName);
             } else {
             		return super.accessToken(oAuthTokenReqMessageContext);      		
             }
+        
         } catch (IdentityOAuth2Exception e) {
             throw new OAuthSystemException(e);
         }
@@ -137,13 +151,13 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
      * @return Signed jwt string.
      * @throws IdentityOAuth2Exception
      */
-    protected String customBuildJWTToken(OAuthTokenReqMessageContext request) throws IdentityOAuth2Exception {
+    protected String customBuildJWTToken(OAuthTokenReqMessageContext request, String sporkName) throws IdentityOAuth2Exception {
 
         // Set claims to jwt token.
         JWTClaimsSet jwtClaimsSet = customCreateJWTClaimSet(null, request, request.getOauth2AccessTokenReqDTO()
                 .getClientId());
 
-        return customSignJWTWithRSA(jwtClaimsSet, request, null);
+        return customSignJWTWithRSA(jwtClaimsSet, request, null, sporkName);
     }
 
 
@@ -157,7 +171,7 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
      * @throws IdentityOAuth2Exception
      */
     protected String customSignJWTWithRSA(JWTClaimsSet jwtClaimsSet, OAuthTokenReqMessageContext tokenContext,
-                                    OAuthAuthzReqMessageContext authorizationContext) throws IdentityOAuth2Exception {
+                                    OAuthAuthzReqMessageContext authorizationContext, String sporkName) throws IdentityOAuth2Exception {
 
     		String spork_kid = "";
     		String spork_cid = "";
@@ -184,9 +198,9 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
                 // Get tenant's key store manager.
                 KeyStoreManager tenantKSM = KeyStoreManager.getInstance(tenantId);
                 try {
-                    privateKey = tenantKSM.getPrivateKey(JWTTokenIssuerCustom.SPORK_KEYSTORE_NAME, JWTTokenIssuerCustom.SPORK_PRIVATEKEY_ALIAS);
+                    privateKey = tenantKSM.getPrivateKey(sporkName + JWTTokenIssuerCustom.SPORK_KEYSTORE_NAME, JWTTokenIssuerCustom.SPORK_PRIVATE_KEY_NAME);
                 } catch (Exception e) {
-                    throw new IdentityOAuth2Exception("Error while obtaining private key for Spork", e);
+                    throw new IdentityOAuth2Exception("Error while obtaining private key for "+sporkName, e);
                 }
 
                 // Add the private key to the static concurrent hash map for later uses.
@@ -196,8 +210,8 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
 
             Registry registry = OAuth2ServiceComponentHolder.getRegistryService().getConfigSystemRegistry(tenantId);
 
-            if (registry.resourceExists(JWTTokenIssuerCustom.SPORK_REGISTRY_PATH)) {
-                Resource resource = registry.get(JWTTokenIssuerCustom.SPORK_REGISTRY_PATH);
+            if (registry.resourceExists("/"+ sporkName)) {
+                Resource resource = registry.get("/"+ sporkName);
                 spork_kid = resource.getProperty(JWTTokenIssuerCustom.SPORK_KEY_ID);  
                 spork_cid = resource.getProperty(JWTTokenIssuerCustom.SPORK_CLIENT_ID);  
             } else {
@@ -266,7 +280,6 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
                     getAccessTokenLifeTimeInMillis(tokenReqMessageContext, oAuthAppDO, consumerKey);
         }
 
-        String issuer = "test-auth-3fb8a@appspot.gserviceaccount.com";
         long curTimeInMillis = Calendar.getInstance().getTimeInMillis();
 
         // Set the default claims.
