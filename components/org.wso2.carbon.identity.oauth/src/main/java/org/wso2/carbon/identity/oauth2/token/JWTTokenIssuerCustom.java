@@ -91,7 +91,7 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
 
     // We are keeping a private key map which will have private key for each tenant domain. We are keeping this as a
     // static Map since then we don't need to read the key from keystore every time.
-    private static Map<Integer, Key> privateKeys = new ConcurrentHashMap<>();
+    private static Map<String, Key> privateKeys = new ConcurrentHashMap<>();
     private Algorithm signatureAlgorithm = null;
 
     public JWTTokenIssuerCustom() throws IdentityOAuth2Exception {
@@ -131,7 +131,7 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
             
             if (sporkScopeName != "" ) {         
                 if (log.isDebugEnabled()) {
-                		log.debug("Custom: has scope \"" + sporkScopeName +" \"");
+                		log.debug("Custom: has scope \"" + sporkScopeName +"\"");
                 }
                 return this.customBuildJWTToken(oAuthTokenReqMessageContext, sporkScopeName);
             } else {
@@ -186,25 +186,32 @@ public class JWTTokenIssuerCustom extends JWTTokenIssuer {
             }
 
             int tenantId = IdentityTenantUtil.getTenantId(tenantDomain);
-
+            String keyCacheId = sporkName + tenantId;
+            
             Key privateKey;
-            if (privateKeys.containsKey(tenantId)) {
+            if (privateKeys.containsKey(keyCacheId)) {
 
                 // PrivateKey will not be null because containsKey() true says given key is exist and ConcurrentHashMap
                 // does not allow to store null values.
-                privateKey = privateKeys.get(tenantId);
+                privateKey = privateKeys.get(keyCacheId);
+                if (log.isDebugEnabled()) {
+                		log.debug("Custom: using cached private key  \"" + keyCacheId +" \"");
+                }
             } else {
 
                 // Get tenant's key store manager.
                 KeyStoreManager tenantKSM = KeyStoreManager.getInstance(tenantId);
                 try {
-                    privateKey = tenantKSM.getPrivateKey(sporkName + JWTTokenIssuerCustom.SPORK_KEYSTORE_NAME, JWTTokenIssuerCustom.SPORK_PRIVATE_KEY_NAME);
+                    privateKey = tenantKSM.getPrivateKey(sporkName + JWTTokenIssuerCustom.SPORK_KEYSTORE_NAME, sporkName);
+                    if (log.isDebugEnabled()) {
+                    		log.debug("Custom: found private key  \"" + keyCacheId +" \"");
+                    }
                 } catch (Exception e) {
                     throw new IdentityOAuth2Exception("Error while obtaining private key for "+sporkName, e);
                 }
 
                 // Add the private key to the static concurrent hash map for later uses.
-                privateKeys.put(tenantId, privateKey);
+                privateKeys.put(keyCacheId, privateKey);
             }
 
 
